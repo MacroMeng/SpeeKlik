@@ -1,0 +1,19 @@
+ame: "新功能畅想"
+description: "你想让SpeeKlik多哪些NB新功能呢"
+labels: [New Report, Enhancement, Go to Discussions]
+body:
+- type: checkboxes
+  id: "yml-1"
+  attributes:
+    label: "检查项"
+    description: "检查是否是你的错误，而非其他原因。（狗头保命"
+    options:
+    - label: "你确定这一*畅想*不是天马行空的，不至于让开发者（们）累汐"
+      required: true
+- type: textarea
+  id: "yml-2"
+  attributes:
+    label: 内容
+    description: "说说看:)"
+  validations:
+    required: true
