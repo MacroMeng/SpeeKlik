@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 提问
+    url: https://github.com/MacroMeng/SpeeKlik/discussions/new?category=q-a
+    about: 问问题在这里问，蟹蟹支持
+  - name: 讨论
+    url: https://github.com/MacroMeng/SpeeKlik/discussions/new?category=%E6%B0%B4%E6%B1%A0
+    about: 一起来喝 *水* 吧
