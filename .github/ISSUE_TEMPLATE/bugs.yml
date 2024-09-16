@@ -1,4 +1,4 @@
-ame: "Bug报告"
+name: "Bug报告"
 description: "SpeeKlik本身造成的Bug可以在这里报告"
 labels: [New Report, Bug]
 body:
