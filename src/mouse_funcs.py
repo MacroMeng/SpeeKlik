@@ -18,6 +18,7 @@ def pause_val_resetter(func, new_delay):
 
 
 def click_with_delay(x: int, y: int, delay: float, times: int):
+    """重复点击指定次数次，间隔指定秒"""
     def work():
         for i in range(times):
             pag.moveTo(x, y)
@@ -25,3 +26,7 @@ def click_with_delay(x: int, y: int, delay: float, times: int):
 
     work = pause_val_resetter(work, delay)
     work()
+
+
+def select_safety(ok: bool):
+    pag.FAILSAFE = ok
