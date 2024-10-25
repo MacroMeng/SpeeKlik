@@ -4,12 +4,12 @@ import functools
 import pyautogui as pag
 
 
-def pause_val_wrapper(func, new_delay):
+def safe_pause_val_wrapper(func, new_safe_delay):
     """一个装饰器，可以在被装饰的函数内部重写pyautogui.DELAY。"""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         org = pag.PAUSE
-        pag.PAUSE = new_delay
+        pag.PAUSE = new_safe_delay
         try:
             func(*args, **kwargs)
         finally:
@@ -17,14 +17,16 @@ def pause_val_wrapper(func, new_delay):
     return wrapper
 
 
-def click_with_delay(x: int, y: int, delay: float, times: int):
+def click_with_delay(x: int, y: int,
+                     delay: float, times: int,
+                     safe_delay: float = 0.05):
     """重复点击指定次数次，间隔指定秒"""
     def work():
         for i in range(times):  # 在给定的次数内循环点击
-            pag.moveTo(x, y)
+            pag.moveTo(x, y, duration=delay)
             pag.click()
 
-    work = pause_val_wrapper(work, delay)  # 使用pause_val_wrapper设定延迟
+    work = safe_pause_val_wrapper(work, safe_delay)  # 使用safe_pause_val_wrapper设定延迟
     work()
 
 
