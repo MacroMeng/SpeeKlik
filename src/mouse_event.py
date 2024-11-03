@@ -1,5 +1,7 @@
+"""MouseClick和MouseEvents类"""
 from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Iterable
 
 
 @dataclass(order=False, frozen=True, unsafe_hash=True)
@@ -11,15 +13,18 @@ class MouseClick:
 
 
 class MouseEvents:
-    def __init__(self, events: list[MouseClick] | None = None):
+    """一个用于记录所有鼠标事件来驱动鼠标脚本的类"""
+    def __init__(self, events: Iterable[MouseClick] | None = None):
         if events is None:
             events = []
-        self.events = events
+        self.events = list(events)
 
-    def add_MouseClick(self, pos: MouseClick):
+    def add_event(self, pos: MouseClick):
+        """添加一个鼠标事件"""
         self.events.append(pos)
 
     def run_all(self, caller: Callable[[MouseClick], None]):
+        """使用提供的函数运行所有鼠标事件"""
         for event in self.events:
             caller(event)
 
