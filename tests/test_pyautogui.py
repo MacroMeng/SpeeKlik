@@ -1,7 +1,7 @@
-import sys
 import time
 
 import pyautogui as p
+
 
 # def test_pos_get_move_to_RD():
 #     print("move your mouse to RD.")
@@ -10,7 +10,7 @@ import pyautogui as p
 
 
 def test_can_move_mouse():
-    p.PAUSE = 1e-100000
+    p.PAUSE = 0
     p.FAILSAFE = False
     for i in range(p.size()[0]):
         for j in range(p.size()[1]):
