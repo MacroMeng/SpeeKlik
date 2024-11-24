@@ -1,5 +1,16 @@
 # 欢迎使用SpeeKilk
+
 **SpeeKlik**是一个使用Python语言写成的鼠标连点器。
+
+![](https://img.shields.io/github/downloads/MacroMeng/SpeeKlik/total?style=for-the-badge&labelColor=%23222222)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/MacroMeng/SpeeKlik?style=for-the-badge&labelColor=%23222222&color=%23aa3333)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/MacroMeng/SpeeKlik?style=for-the-badge&labelColor=%23222222&color=%233333aa)
+![GitHub License](https://img.shields.io/github/license/MacroMeng/SpeeKlik?style=for-the-badge&labelColor=%23222222&color=%23aaaaaa)
+![GitHub Discussions](https://img.shields.io/github/discussions/MacroMeng/SpeeKlik?style=for-the-badge&labelColor=%23222222&color=%23aa8888)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/MacroMeng/SpeeKlik?style=for-the-badge&labelColor=%23222222&color=%23aa8811)
+![GitHub forks](https://img.shields.io/github/forks/MacroMeng/SpeeKlik?style=for-the-badge&labelColor=%23222222&color=%23aa22aa)
+![GitHub watchers](https://img.shields.io/github/watchers/MacroMeng/SpeeKlik?style=for-the-badge&labelColor=%23222222&color=%23000000)
+![GitHub Release](https://img.shields.io/github/v/release/MacroMeng/SpeeKlik?include_prereleases&sort=date&display_name=release&style=for-the-badge&labelColor=%23222222&color=%23ddaa11)
 ![](https://github.com/MacroMeng/SpeeKlik/icon.png)
 
 ### SpeeKlik来干嘛？
