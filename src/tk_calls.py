@@ -1,4 +1,5 @@
-"""在主程序外定义的窗口需要的函数"""
+"""在主程序外定义的窗口需要的函数、常量等"""
+from enum import Enum
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import *
@@ -9,14 +10,17 @@ import pyautogui as pag
 WEBSITE_ADDR = "https://github.com/MacroMeng/SpeeKlik"
 
 
-<<<<<<< Updated upstream
+class MouseClickButtons(Enum):
+    LEFT: str = "左键|L"
+    MIDDLE: str = "中键|M"
+    RIGHT: str = "右键|R"
+
+
 def select_safety(ok: bool):
     """设置pyautogui.FAILSAFE值（用于在tkinter窗口中设置）"""
     pag.FAILSAFE = ok
 
 
-=======
->>>>>>> Stashed changes
 def about_speeklik(version: str, special: str = ""):
     about_box = messagebox.Message(icon=messagebox.INFO,
                                    message=f"SpeeKlik（速击）{special}\n版本{version}",
