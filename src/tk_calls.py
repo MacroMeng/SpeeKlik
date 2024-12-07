@@ -9,11 +9,14 @@ import pyautogui as pag
 WEBSITE_ADDR = "https://github.com/MacroMeng/SpeeKlik"
 
 
+<<<<<<< Updated upstream
 def select_safety(ok: bool):
     """设置pyautogui.FAILSAFE值（用于在tkinter窗口中设置）"""
     pag.FAILSAFE = ok
 
 
+=======
+>>>>>>> Stashed changes
 def about_speeklik(version: str, special: str = ""):
     about_box = messagebox.Message(icon=messagebox.INFO,
                                    message=f"SpeeKlik（速击）{special}\n版本{version}",
