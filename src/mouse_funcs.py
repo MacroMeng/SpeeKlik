@@ -1,8 +1,11 @@
 """为主程序main()提供处理鼠标/键盘的函数"""
 import functools
+import re
 from typing import Callable
 
 import pyautogui as pag
+
+import mouse_event as me
 
 
 def safe_pause_val_wrapper(new_safe_delay: float):
@@ -30,3 +33,9 @@ def click_with_delay(x: int | None, y: int | None,
         pag.click(x, y, clicks=times, interval=delay)
 
     work()
+
+
+def resolve_line(ln: str) -> me.MouseClick | me.KeyClick:
+    """解析一行字符串，返回一个MouseClick或KeyClick对象"""
+    if ln[0] == "K":
+        key_pattern = re.compile("")

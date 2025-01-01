@@ -40,12 +40,12 @@ class MouseKeyEvents:
         return f"{self.__class__.__name__}({key_lists_str})"
 
     @staticmethod
-    def _single_stringizer(event: MouseClick | KeyClick):
+    def _single_to_string(event: MouseClick | KeyClick):
         if isinstance(event, MouseClick):
             return f"({event.x}, {event.y}, delay: {event.delay}s)"
         elif isinstance(event, KeyClick):
             return f"({event.key!r}, delay: {event.delay}s)"
 
     def __str__(self):
-        res = ";".join(self._single_stringizer(event) for event in self.events)
+        res = ";".join(self._single_to_string(event) for event in self.events)
         return res

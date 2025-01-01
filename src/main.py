@@ -9,7 +9,7 @@ from tk_calls import MouseClickButtons as MCBt
 
 
 # 常量
-VERSION = "v0.9.0 Alpha 040"
+VERSION = "v0.9.0 Alpha 045"
 ICON_S_PATH = "../img/icon.ico"
 DEFAULT_FONT = ("Microsoft JhengHei", 12, "normal")
 
@@ -21,7 +21,6 @@ main.geometry("800x600")
 main.resizable(False, False)
 
 # 变量与配置
-mouse_click_button = ""
 
 # 打开时的提示框
 open_tip_box = messagebox.Message(icon=messagebox.INFO,
@@ -31,13 +30,6 @@ open_tip_box = messagebox.Message(icon=messagebox.INFO,
                                          "地址：https://github.com/MacroMeng/SpeeKlik",
                                   title="Welcome")
 open_tip_box.show()
-
-
-def mouse_click_button_select(_):
-    """因为要使用变量所以必须定义在main里，太悲惨了"""
-    global mouse_click_button, mouse_click_button_choice
-    mouse_click_button = mouse_click_button_choice.get()
-
 
 # 窗口菜单
 menu = Menu(main)
@@ -66,13 +58,5 @@ func_nb.add(mouse_widget, text="鼠标")
 func_nb.add(kb_widget, text="键盘")
 func_nb.pack(padx=5, pady=5, fill=BOTH, expand=True)
 
-# 功能
-mouse_click_button_label = Label(mouse_widget, text="鼠标按钮|Mouse Button", font=DEFAULT_FONT)
-mouse_click_button_label.grid(row=0, column=0, padx=5, pady=5)
-mouse_click_button_choice = Combobox(mouse_widget,
-                                     font=DEFAULT_FONT,
-                                     values=(MCBt.LEFT.value, MCBt.MIDDLE.value, MCBt.RIGHT.value))
-mouse_click_button_choice.grid(row=0, column=1, padx=(275, 5), pady=5, ipadx=50)
-mouse_click_button_choice.bind("<<ComboboxSelected>>", mouse_click_button_select)
 
 main.mainloop()
