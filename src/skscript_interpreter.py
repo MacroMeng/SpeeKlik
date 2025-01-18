@@ -27,7 +27,7 @@ def solve_from_file(fn: str) -> me.MouseKeyEvents:
 
 
 def solve_key(line: str) -> me.KeyClick:
-    """解析一行字符串，返回一个KeyClick对象"""
+    """解析一行键盘命令，返回一个KeyClick对象"""
     if line[:2] != "K|":
         raise e.LineBeginError(f"Invalid line: {line}")
     line = line[2:]
@@ -53,8 +53,8 @@ def solve_key(line: str) -> me.KeyClick:
         match args_other := args[1:]:
             case []:
                 delay = 0.0
-            case [delay]:
-                delay = float(delay)
+            case [str(delay_str)]:
+                delay = float(delay_str[6:])
             case _:
                 raise e.InvalidParamError(f'The key command line "{line}" has too many/less arguments.')
     except ValueError as exc:
@@ -66,7 +66,7 @@ def solve_key(line: str) -> me.KeyClick:
 
 
 def solve_mouse(line: str) -> me.MouseClick:
-    """解析一行字符串，返回一个MouseClick对象"""
+    """解析一行鼠标命令，返回一个MouseClick对象"""
     if line[:2] != "M|":
         raise e.LineBeginError(f"Invalid line: {line}")
     line = line[2:]
@@ -82,3 +82,35 @@ def solve_mouse(line: str) -> me.MouseClick:
     except IndexError as exc:
         raise e.InvalidParamError(f'The mouse command line "{line}" has no arguments.')\
               from exc
+    try:
+        match other_args := args[1:]:
+            case []:
+                x = None
+                y = None
+                delay = 0.0
+            case [str(pos_str)]:
+                x, y = eval(pos_str)
+                delay = 0.0
+            case [str(pos_str), str(delay_str)]:
+                x, y = eval(pos_str)
+                if not isinstance(x, int) and isinstance(y, int):
+                    raise e.InvalidParamError(f'The second argument of mouse command line "{line}" '
+                                              f'is not a valid position.')
+                delay = float(delay_str[6:])
+            case [str(delay_str)]:
+                x = None
+                y = None
+                delay = float(delay_str[6:])
+            case _:
+                raise e.InvalidParamError(f'The mouse command line "{line}" has too many/less arguments.')
+    except ValueError as exc:
+        raise e.InvalidParamError(f'The second argument of mouse command line "{line}" '
+                                  f'is not a valid float.')\
+              from exc
+
+    return me.MouseClick(x, y, delay)
+
+
+def solve_predef(line: str) -> me.:
+    """解析一行预定义字符串"""
+
