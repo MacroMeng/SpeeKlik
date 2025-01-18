@@ -5,14 +5,14 @@ from dataclasses import dataclass
 from typing import Iterable, override
 
 
-@dataclass(order=False, frozen=True, unsafe_hash=True)
+@dataclass(order=False, frozen=True,)
 class KeyClick:
     """一个dataclass，用于记录键盘点击和间隔事件，从而运行键盘脚本"""
     key: str
     delay: float  # 单位为秒
 
 
-@dataclass(order=False, frozen=True, unsafe_hash=True)
+@dataclass(order=False, frozen=True,)
 class MouseClick:
     """一个dataclass，用于记录鼠标点击和间隔事件，从而运行鼠标脚本"""
     x: int | None
