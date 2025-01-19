@@ -1,7 +1,5 @@
 import mouse_event as me
 import errors as e
-import re
-
 from tk_calls import MouseClickButtons as MCBt
 
 
@@ -11,7 +9,7 @@ def solve_from_file(fn: str) -> me.MouseKeyEvents:
         lines = f.readlines()
     events = me.MouseKeyEvents()
     for line in lines:
-        match line[0]:
+        match line[0].strip():
             case "K":
                 new = solve_key(line)
             case "M":
@@ -111,6 +109,20 @@ def solve_mouse(line: str) -> me.MouseClick:
     return me.MouseClick(x, y, delay)
 
 
-def solve_predef(line: str) -> me.:
+def solve_predef(line: str) -> me.Environment:
     """解析一行预定义字符串"""
-
+    if line[:2] != "@|":
+        raise e.LineBeginError(f"Invalid line: {line}")
+    line = line[2:]
+    args = line.split("|")
+    definitons = {
+        k: v for k, v in (
+            arg.split(":") for arg in args
+        )
+    }
+    try:
+        return me.Environment(**definitons)
+    except ValueError as exc:
+        raise e.InvalidParamError(f'The predefine command line "{line}" '
+                                  f'has invalid arguments.')\
+              from exc

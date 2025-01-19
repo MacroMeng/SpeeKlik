@@ -1,5 +1,6 @@
 import pyautogui as pag
 
 
-while True:
-    print(pag.position())
+if __name__ == "__main__":
+    while True:
+        print(pag.position(), end="\r", flush=True)
