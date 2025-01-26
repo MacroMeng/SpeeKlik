@@ -42,13 +42,13 @@ def solve_key(line: str) -> me.KeyClick:
     except ValueError as exc:
         raise e.InvalidParamError(f'The first argument of key command line "{line}" '
                                   f'is not a valid hex of Unicode. Read the documents '
-                                  f'at .../SpeeKlik/doc/script_writing.md for more information.')\
-              from exc
+                                  f'at .../SpeeKlik/doc/script_writing.md for more information.') \
+            from exc
     except IndexError as exc:
-        raise e.InvalidParamError(f'The key command line "{line}" has no arguments.')\
-              from exc
+        raise e.InvalidParamError(f'The key command line "{line}" has no arguments.') \
+            from exc
     try:
-        match args_other := args[1:]:
+        match args[1:]:
             case []:
                 delay = 0.0
             case [str(delay_str)]:
@@ -57,8 +57,8 @@ def solve_key(line: str) -> me.KeyClick:
                 raise e.InvalidParamError(f'The key command line "{line}" has too many/less arguments.')
     except ValueError as exc:
         raise e.InvalidParamError(f'The second argument of key command line "{line}" '
-                                  f'is not a valid float.')\
-              from exc
+                                  f'is not a valid float.') \
+            from exc
 
     return me.KeyClick(key, delay)
 
@@ -70,25 +70,31 @@ def solve_mouse(line: str) -> me.MouseClick:
     line = line[2:]
     args = line.split("|")
     try:
-        match len(arg_button := args[0]):
-            case "L": button = MCBt.LEFT
-            case "M": button = MCBt.MIDDLE
-            case "R": button = MCBt.RIGHT
+        match len(args[0]):
+            case "L":
+                button = MCBt.LEFT
+            case "M":
+                button = MCBt.MIDDLE
+            case "R":
+                button = MCBt.RIGHT
             case _:
                 raise e.InvalidParamError(f'The first argument of mouse command line "{line}" '
                                           f'must be one of "L", "M", "R".')
     except IndexError as exc:
-        raise e.InvalidParamError(f'The mouse command line "{line}" has no arguments.')\
-              from exc
+        raise e.InvalidParamError(f'The mouse command line "{line}" has no arguments.') \
+            from exc
     try:
-        match other_args := args[1:]:
+        match args[1:]:
             case []:
                 x = None
                 y = None
-                delay = 0.0
+                delay = None
             case [str(pos_str)]:
                 x, y = eval(pos_str)
-                delay = 0.0
+                if not isinstance(x, int) and isinstance(y, int):
+                    raise e.InvalidParamError(f'The second argument of mouse command line "{line}" '
+                                              f'is not a valid position.')
+                delay = None
             case [str(pos_str), str(delay_str)]:
                 x, y = eval(pos_str)
                 if not isinstance(x, int) and isinstance(y, int):
@@ -103,10 +109,10 @@ def solve_mouse(line: str) -> me.MouseClick:
                 raise e.InvalidParamError(f'The mouse command line "{line}" has too many/less arguments.')
     except ValueError as exc:
         raise e.InvalidParamError(f'The second argument of mouse command line "{line}" '
-                                  f'is not a valid float.')\
-              from exc
+                                  f'is not a valid float.') \
+            from exc
 
-    return me.MouseClick(x, y, delay)
+    return me.MouseClick(x, y, button, delay)
 
 
 def solve_predef(line: str) -> me.Environment:
@@ -124,5 +130,5 @@ def solve_predef(line: str) -> me.Environment:
         return me.Environment(**definitons)
     except ValueError as exc:
         raise e.InvalidParamError(f'The predefine command line "{line}" '
-                                  f'has invalid arguments.')\
-              from exc
+                                  f'has invalid arguments.') \
+            from exc

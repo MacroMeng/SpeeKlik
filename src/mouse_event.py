@@ -7,7 +7,7 @@ from typing import Iterable, override, TypeAlias
 import tk_calls as tc
 
 
-Records: TypeAlias = Iterable["MouseClick", "KeyClick", "Environment"]
+Records: TypeAlias = Iterable["MouseClick | KeyClick | Environment"]
 
 
 @dataclass(order=False, frozen=True)
