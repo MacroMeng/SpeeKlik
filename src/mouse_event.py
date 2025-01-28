@@ -39,11 +39,6 @@ class MouseKeyEvents(collections.UserList):
         events = [event for event in events if event is not self.env]  # 去除预定义
         super().__init__(events)
 
-    def run_all(self, caller: Callable[[Records], None]):
-        """使用提供的函数运行所有鼠标/键盘事件"""
-        for event in self.data:
-            caller(event)
-
     @override
     def __repr__(self):
         key_lists_str = ", ".join(self.data)

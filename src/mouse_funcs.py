@@ -6,6 +6,8 @@ from typing import Callable
 
 import pyautogui as pag
 
+import mouse_event as me
+
 WEBSITE_ADDR = "https://github.com/MacroMeng/SpeeKlik"
 
 
@@ -57,13 +59,12 @@ def safe_pause_val_wrapper(new_safe_delay: float):
     return do_wrap
 
 
-def click_with_delay(x: int | None, y: int | None,
-                     delay: float, times: int,
-                     safe_delay: float = 0.05,
-                     button: str = pag.LEFT):
-    """重复点击指定次数次，间隔指定秒"""
-    @safe_pause_val_wrapper(safe_delay)
-    def work():
-        pag.click(x, y, clicks=times, interval=delay, button=button)
-
-    work()
+def run(command: me.MouseKeyEvents) -> None:
+    env = command.env
+    for event in command:
+        if isinstance(event, me.MouseClick):
+            pag.sleep(event.delay if event.delay is not None else env.delay)
+            pag.click(event.x, event.y)
+        elif isinstance(event, me.KeyClick):
+            pag.sleep(event.delay if event.delay is not None else env.delay)
+            pag.press()

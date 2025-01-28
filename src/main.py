@@ -8,7 +8,7 @@ import mouse_funcs as mf
 
 
 # 常量
-VERSION = "v0.9.0 Alpha 045"
+VERSION = "v0.9.0 Alpha 066"
 ICON_S_PATH = "../img/icon.ico"
 DEFAULT_FONT = ("Microsoft JhengHei", 12, "normal")
 
@@ -50,12 +50,6 @@ menu_about.add_command(label="打开该项目的GitHub网页↗",
                        accelerator="Open SpeeKlik's GitHub Page↗")
 
 # 窗口主体
-func_nb = Notebook(padding=5)
-mouse_widget = Frame(main)
-kb_widget = Frame(main)
-func_nb.add(mouse_widget, text="鼠标")
-func_nb.add(kb_widget, text="键盘")
-func_nb.pack(padx=5, pady=5, fill=BOTH, expand=True)
 
 
 main.mainloop()
