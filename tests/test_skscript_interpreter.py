@@ -1,6 +1,6 @@
-import src.skscript_interpreter as si
-from ..src import mouse_event as me
-from ..src.tk_calls import MouseClickButtons
+import skscript_interpreter as si
+import mouse_event as me
+from tk_calls import MouseClickButtons
 
 
 predef_suits = {
@@ -14,5 +14,27 @@ key_suits = {
     "K|1|delay=0.5": me.KeyClick("1", 0.5),  # delay项为浮点数
 }
 mouse_suits = {
-    "M|L": me.MouseClick(None, None, MouseClickButtons.LEFT, 0.0),  # 单个参数的鼠标指令
+    "M|L": me.MouseClick(None, None, MouseClickButtons.LEFT, None),  # 单个参数的鼠标指令
+    "M|L|(1, 1)": me.MouseClick(1, 1, MouseClickButtons.LEFT, None),  # 多个参数的鼠标指令
+    "M|M|delay=1": me.MouseClick(None, None, MouseClickButtons.MIDDLE, 1.),  # delay项+无坐标
+    "M|R|(1, 1)|delay=1": me.MouseClick(1, 1, MouseClickButtons.RIGHT, 1.),  # delay项+有坐标
+    "M|L|delay=0.5": me.MouseClick(None, None, MouseClickButtons.LEFT, 0.5),  # delay项为浮点数
 }
+
+
+def test_predef():
+    for text, expected in predef_suits.items():
+        res = si.solve_predef(text)
+        assert res == expected
+
+
+def test_key():
+    for text, expected in key_suits.items():
+        res = si.solve_key(text)
+        assert res == expected
+
+
+def test_mouse():
+    for text, expected in mouse_suits.items():
+        res = si.solve_mouse(text)
+        assert res == expected

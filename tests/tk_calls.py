@@ -11,9 +11,9 @@ WEBSITE_ADDR = "https://github.com/MacroMeng/SpeeKlik"
 
 
 class MouseClickButtons(Enum):
-    LEFT = "左键|L"
-    MIDDLE = "中键|M"
-    RIGHT = "右键|R"
+    LEFT: str = "左键|L"
+    MIDDLE: str = "中键|M"
+    RIGHT: str = "右键|R"
 
 
 def select_safety(ok: bool):
