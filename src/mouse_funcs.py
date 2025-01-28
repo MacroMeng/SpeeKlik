@@ -1,11 +1,45 @@
 """为主程序main()提供处理鼠标/键盘的函数"""
 import functools
-import re
+from enum import Enum
+from tkinter import messagebox
 from typing import Callable
 
 import pyautogui as pag
 
-import mouse_event as me
+WEBSITE_ADDR = "https://github.com/MacroMeng/SpeeKlik"
+
+
+class MouseClickButtons(Enum):
+    LEFT = "左键|L"
+    MIDDLE = "中键|M"
+    RIGHT = "右键|R"
+
+
+def select_safety(ok: bool):
+    """设置pyautogui.FAILSAFE值（用于在tkinter窗口中设置）"""
+    pag.FAILSAFE = ok
+
+
+def about_speeklik(version: str, special: str = ""):
+    about_box = messagebox.Message(icon=messagebox.INFO,
+                                   message=f"SpeeKlik（速击）{special}\n版本{version}",
+                                   detail="SpeeKlik，一个开源，免费，无限制的鼠标/键盘控制器。\n"
+                                          "项目地址：https://github.com/MacroMeng/SpeeKlik",
+                                   title="关于SpeeKlik")
+    about_box.show()
+
+
+def get_special_version_str(version: str):
+    v_list = version.split()
+    if len(v_list) == 1:
+        return ""
+    elif len(v_list) == 3:
+        return v_list[1] + "版"
+
+
+def open_website():
+    import webbrowser
+    webbrowser.open(WEBSITE_ADDR, new=1)
 
 
 def safe_pause_val_wrapper(new_safe_delay: float):

@@ -4,7 +4,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Iterable, override, TypeAlias
 
-import tk_calls as tc
+import mouse_funcs as mf
 
 
 Records: TypeAlias = Iterable["MouseClick | KeyClick | Environment"]
@@ -22,7 +22,7 @@ class MouseClick:
     """一个dataclass，用于记录鼠标点击和间隔事件，从而运行鼠标脚本"""
     x: int | None
     y: int | None
-    button: tc.MouseClickButtons
+    button: mf.MouseClickButtons
     delay: float | None  # 单位为秒
 
 

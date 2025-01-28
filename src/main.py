@@ -4,8 +4,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import *
 
-import tk_calls as tc
-from tk_calls import MouseClickButtons as MCBt
+import mouse_funcs as mf
 
 
 # 常量
@@ -42,12 +41,12 @@ menu_edit.add_command(label="退出",
                       command=main.destroy,
                       accelerator="Exit")
 menu_about.add_command(label="关于SpeeKlik",
-                       command=partial(tc.about_speeklik,
+                       command=partial(mf.about_speeklik,
                                        VERSION,
-                                       tc.get_special_version_str(VERSION)),
+                                       mf.get_special_version_str(VERSION)),
                        accelerator="About SpeeKlik")
 menu_about.add_command(label="打开该项目的GitHub网页↗",
-                       command=tc.open_website,
+                       command=mf.open_website,
                        accelerator="Open SpeeKlik's GitHub Page↗")
 
 # 窗口主体
