@@ -8,9 +8,9 @@ import mouse_funcs as mf
 
 
 # 常量
-VERSION = "v0.9.0 Alpha 066"
+VERSION = "v0.9.1 Alpha 069"
 ICON_S_PATH = "../img/icon.ico"
-DEFAULT_FONT = ("Microsoft JhengHei", 12, "normal")
+DEFAULT_FONT = ("Microsoft YaHei UI", 12, "normal")
 
 # TK主窗口设置
 main = Tk()
@@ -50,6 +50,9 @@ menu_about.add_command(label="打开该项目的GitHub网页↗",
                        accelerator="Open SpeeKlik's GitHub Page↗")
 
 # 窗口主体
-
+details = Frame(main)
+details.grid(row=0, column=0, padx=10, pady=10)
+details_title = Label(details, text="SpeeKlik仪表盘", font=("Microsoft YaHei UI", 20, "bold"))
+details_title.grid(row=0, column=0, padx=5, pady=5)
 
 main.mainloop()
