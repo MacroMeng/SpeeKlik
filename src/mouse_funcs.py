@@ -1,6 +1,5 @@
 """为主程序main()提供处理鼠标/键盘的函数"""
 import functools
-from enum import Enum
 from tkinter import messagebox
 from typing import Callable
 
@@ -9,12 +8,6 @@ import pyautogui as pag
 import mouse_event as me
 
 WEBSITE_ADDR = "https://github.com/MacroMeng/SpeeKlik"
-
-
-class MouseClickButtons(Enum):
-    LEFT = "左键|L"
-    MIDDLE = "中键|M"
-    RIGHT = "右键|R"
 
 
 def select_safety(ok: bool):

@@ -2,12 +2,17 @@
 import collections
 from collections.abc import Callable
 from dataclasses import dataclass
+from enum import Enum
 from typing import Iterable, override, TypeAlias
-
-import mouse_funcs as mf
 
 
 Records: TypeAlias = Iterable["MouseClick | KeyClick | Environment"]
+
+
+class MouseClickButtons(Enum):
+    LEFT = "左键|L"
+    MIDDLE = "中键|M"
+    RIGHT = "右键|R"
 
 
 @dataclass(order=False, frozen=True)
@@ -22,7 +27,7 @@ class MouseClick:
     """一个dataclass，用于记录鼠标点击和间隔事件，从而运行鼠标脚本"""
     x: int | None
     y: int | None
-    button: mf.MouseClickButtons
+    button: "mouse_funcs.MouseClickButtons"
     delay: float | None  # 单位为秒
 
 
