@@ -2,3 +2,4 @@
 /.idea/*.*
 /tests/__pycache__
 /tests/__pycache__/*.*
+/logs/
