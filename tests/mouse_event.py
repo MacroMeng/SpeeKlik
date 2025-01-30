@@ -2,12 +2,17 @@
 import collections
 from collections.abc import Callable
 from dataclasses import dataclass
+from enum import Enum
 from typing import Iterable, override, TypeAlias
-
-import tk_calls as tc
 
 
 Records: TypeAlias = Iterable["MouseClick | KeyClick | Environment"]
+
+
+class MouseClickButtons(Enum):
+    LEFT = "左键|L"
+    MIDDLE = "中键|M"
+    RIGHT = "右键|R"
 
 
 @dataclass(order=False, frozen=True)
@@ -22,7 +27,7 @@ class MouseClick:
     """一个dataclass，用于记录鼠标点击和间隔事件，从而运行鼠标脚本"""
     x: int | None
     y: int | None
-    button: tc.MouseClickButtons
+    button: "mouse_funcs.MouseClickButtons"
     delay: float | None  # 单位为秒
 
 
@@ -38,11 +43,6 @@ class MouseKeyEvents(collections.UserList):
         self.env = Environment(**self.env)  # 转换回Environment对象
         events = [event for event in events if event is not self.env]  # 去除预定义
         super().__init__(events)
-
-    def run_all(self, caller: Callable[[Records], None]):
-        """使用提供的函数运行所有鼠标/键盘事件"""
-        for event in self.data:
-            caller(event)
 
     @override
     def __repr__(self):

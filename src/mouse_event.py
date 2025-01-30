@@ -27,7 +27,7 @@ class MouseClick:
     """一个dataclass，用于记录鼠标点击和间隔事件，从而运行鼠标脚本"""
     x: int | None
     y: int | None
-    button: "mouse_funcs.MouseClickButtons"
+    button: MouseClickButtons
     delay: float | None  # 单位为秒
 
 
@@ -52,7 +52,7 @@ class MouseKeyEvents(collections.UserList):
     @staticmethod
     def _single_to_string(event: Records):
         if isinstance(event, MouseClick):
-            return f"(CLICK {event.x}, {event.y}, delay: {event.delay}s)"
+            return f"(CLICK {event.button.value}({event.x}, {event.y}) delay: {event.delay}s)"
         elif isinstance(event, KeyClick):
             return f"(PRESS {event.key!r}, delay: {event.delay}s)"
         elif isinstance(event, Environment):
