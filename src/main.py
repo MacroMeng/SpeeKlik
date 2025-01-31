@@ -44,6 +44,7 @@ def load_script():
     details_state_running["text"] = "准备就绪"
     menu_script.entryconfig("清除已加载脚本", state="normal")
     details_state_run["state"] = "normal"
+    menu_script.entryconfig("运行脚本", state="normal")
 
 
 def clear_script():
@@ -54,6 +55,7 @@ def clear_script():
     details_state_running["text"] = "未加载脚本"
     menu_script.entryconfig("清除已加载脚本", state="disabled")
     details_state_run["state"] = "disabled"
+    menu_script.entryconfig("运行脚本", state="disabled")
 
 
 def run():
@@ -92,6 +94,7 @@ menu_edit.add_command(label="退出",
 menu_script.add_command(label="查看脚本指令集(Coming S∞n)",
                         state="disabled",
                         accelerator="View Script Commands")
+menu_script.add_separator()
 menu_script.add_command(label="加载一个脚本",
                         command=load_script,
                         accelerator="Load a Script")
@@ -99,14 +102,27 @@ menu_script.add_command(label="清除已加载脚本",
                         command=clear_script,
                         accelerator="Clear Loaded Script",
                         state="disabled")
+menu_script.add_separator()
+menu_script.add_command(label="运行脚本",
+                        command=run,
+                        accelerator="Run Script",
+                        state="disabled")
 menu_about.add_command(label="关于SpeeKlik",
                        command=partial(mf.about_speeklik,
                                        VERSION,
                                        mf.get_special_version_str(VERSION)),
                        accelerator="About SpeeKlik")
+menu_about.add_separator()
 menu_about.add_command(label="打开该项目的GitHub网页↗",
                        command=mf.open_website,
                        accelerator="Open SpeeKlik's GitHub Page↗")
+menu_about.add_command(label="报告Bug↗",
+                       command=mf.report_bug,
+                       accelerator="Report Bug(s)")
+menu_about.add_separator()
+menu_about.add_command(label="我需要对于“报告Bug”还有GitHub网页”的帮助！",
+                       command=mf.help_github,
+                       accelerator='I need help with opening "Report Bug(s)" or "GitHub Page"!')
 
 # 窗口主体
 details = OldFrame(main, bg=COLOUR_OF_LEVELS[0])
