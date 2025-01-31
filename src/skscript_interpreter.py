@@ -1,6 +1,6 @@
 import mouse_event as me
 import errors as e
-from mouse_funcs import MouseClickButtons as MCBt
+from mouse_event import MouseClickButtons as MCBt
 
 
 def solve_from_file(fn: str) -> me.MouseKeyEvents:
