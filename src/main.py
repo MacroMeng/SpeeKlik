@@ -13,7 +13,7 @@ import mouse_event as me
 import log
 
 # 常量
-VERSION = "v0.9.1 Alpha 080"
+VERSION = "v0.9.1 Beta 1"
 ICON_S_PATH = "../img/icon.ico"
 DEFAULT_FONT = ("Microsoft YaHei UI", 12, "normal")
 H1_FONT = ("Microsoft YaHei UI", 20, "bold")
@@ -30,15 +30,25 @@ main.resizable(False, False)
 # 变量、配置、专用函数
 script_now: me.MouseKeyEvents | None = None
 log.init_logger()
+log.log.info(f"SpeeKlik {VERSION} 已启动！")
 
 
 def load_script():
     global script_now
 
+    log.log.debug("开始加载脚本")
     filename = askopenfilename(title="加载一个脚本文件...", filetypes=[("SpeeKlik脚本", "*.sks")])
+    log.log.debug(f"文件选择框结束，选择文件：{filename}")
     if not filename:
+        log.log.debug("未选择文件，取消加载")
         return
-    script_now = si.solve_from_file(filename)
+    try:
+        script_now = si.solve_from_file(filename)
+        log.log.debug(f"脚本加载成功：{filename}")
+    except Exception as exc:
+        mf.err_box(exc)
+        log.log.warning("正在取消加载脚本。")
+        return
     details_file_loaded["text"] = f"已加载：{os.path.basename(filename)}"
     details_file_clear["state"] = "normal"
     details_state_running["text"] = "准备就绪"
@@ -50,6 +60,7 @@ def load_script():
 def clear_script():
     global script_now
     script_now = None
+    log.log.debug("已清除脚本")
     details_file_loaded["text"] = "未加载脚本"
     details_file_clear["state"] = "disabled"
     details_state_running["text"] = "未加载脚本"
@@ -62,7 +73,9 @@ def run():
     global script_now
     details_state_running["text"] = f"正在运行"
     runner = th.Thread(target=mf.run, args=(script_now, ))
+    runner.daemon = True
     runner.start()
+    log.log.debug(f"启动了用于运行{script_now}的线程(PID{runner.ident})")
     details_state_running["text"] = f"准备就绪"
 
 
@@ -71,6 +84,7 @@ def grid_param(row: int) -> dict:
 
 
 # 打开时的提示框
+log.log.debug("开始构建欢迎窗口")
 open_tip_box = messagebox.Message(icon=messagebox.INFO,
                                   message=f"欢迎使用 SpeeKlik（速击）（版本{VERSION}）！",
                                   detail="SpeeKlik 是一个开源，免费，无限制的鼠标/键盘控制器（也称连点器）。\n"
@@ -78,6 +92,7 @@ open_tip_box = messagebox.Message(icon=messagebox.INFO,
                                          "地址：https://github.com/MacroMeng/SpeeKlik",
                                   title="Welcome")
 open_tip_box.show()
+log.log.debug("开始构建窗口")
 
 # 窗口菜单
 menu = Menu(main)
@@ -123,6 +138,7 @@ menu_about.add_separator()
 menu_about.add_command(label="我需要对于“报告Bug”还有GitHub网页”的帮助！",
                        command=mf.help_github,
                        accelerator='I need help with opening "Report Bug(s)" or "GitHub Page"!')
+log.log.debug("加载了菜单。")
 
 # 窗口主体
 details = OldFrame(main, bg=COLOUR_OF_LEVELS[0])
@@ -153,4 +169,5 @@ details_state_running.grid(**grid_param(1))
 details_state_run = Button(details_state, text="运行脚本", state="disabled", command=run)
 details_state_run.grid(**grid_param(2))
 
+log.log.info("窗口构建完毕，SpeeKlik开始运行。")
 main.mainloop()

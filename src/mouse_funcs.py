@@ -8,6 +8,7 @@ from typing import Callable, Any
 import pyautogui as pag
 
 import mouse_event as me
+import log
 
 WEBSITE_ADDR = "https://github.com/MacroMeng/SpeeKlik"
 DEFAULT_FONT = ("Microsoft YaHei UI", 12, "normal")
@@ -163,3 +164,14 @@ def help_github():
         row=1, column=1, padx=5, pady=5
     )
     helper.mainloop()
+
+
+def err_box(exc: Exception):
+    import traceback
+    log.log.error(f"发生错误：{exc.__class__.__qualname__}({exc!r})\n{traceback.format_exc()}")
+    errbox = messagebox.Message(icon=messagebox.ERROR,
+                                message=f'发生了错误：{exc.__class__.__qualname__}("{exc}")',
+                                detail=f"检查你是否进行了错误的操作，若不是，请在关于>报告错误中提供详细信息。以下是栈信息：\n"
+                                       f"{traceback.format_exc()}",
+                                title=f"发生了错误：{exc.__class__.__qualname__}")
+    errbox.show()
