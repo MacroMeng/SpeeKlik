@@ -7,6 +7,9 @@ from tkinter.filedialog import askopenfilename
 from tkinter.ttk import *
 import threading as th
 
+import darkdetect
+import sv_ttk
+
 import mouse_funcs as mf
 import skscript_interpreter as si
 import mouse_event as me
@@ -18,7 +21,10 @@ ICON_S_PATH = "../img/icon.ico"
 DEFAULT_FONT = ("Microsoft YaHei UI", 12, "normal")
 H1_FONT = ("Microsoft YaHei UI", 20, "bold")
 H2_FONT = ("Microsoft YaHei UI", 16, "bold")
-COLOUR_OF_LEVELS = ["#ffffff", "#f4f4f4"]
+COLOUR_OF_LEVELS_BG = {"light": ("#ffffff", "#f4f4f4"),
+                       "dark": ("#000000", "#0a0a0a")}
+COLOUR_OF_LEVELS_FG = {"light": ("#111111", "#111111"),
+                       "dark": ("#eeeeee", "#eeeeee")}
 
 # TK主窗口设置
 main = Tk()
@@ -83,6 +89,15 @@ def grid_param(row: int) -> dict:
     return dict(row=row, column=0, padx=5, pady=2, sticky=W)
 
 
+def get_colour(level: int, bg: bool) -> str:
+    return {  # (is_bg, is_light)
+        (True, True): COLOUR_OF_LEVELS_BG["light"][level],
+        (True, False): COLOUR_OF_LEVELS_BG["dark"][level],
+        (False, True): COLOUR_OF_LEVELS_FG["light"][level],
+        (False, False): COLOUR_OF_LEVELS_FG["dark"][level]
+    }[bg, darkdetect.isLight()]
+
+
 # 打开时的提示框
 log.log.debug("开始构建欢迎窗口")
 open_tip_box = messagebox.Message(icon=messagebox.INFO,
@@ -141,17 +156,20 @@ menu_about.add_command(label="我需要对于“报告Bug”还有GitHub网页�
 log.log.debug("加载了菜单。")
 
 # 窗口主体
-details = OldFrame(main, bg=COLOUR_OF_LEVELS[0])
+details = OldFrame(main, bg=get_colour(0, True))
 details.grid(row=0, column=0, padx=20, pady=20, sticky=W + E, ipadx=202)
 details_title = Label(details, text="SpeeKlik仪表盘",
-                      font=H1_FONT, background=COLOUR_OF_LEVELS[0])
+                      font=H1_FONT, background=get_colour(0, True),
+                      foreground=get_colour(0, False))
 details_title.grid(row=0, column=0, columnspan=1, padx=5, pady=5, sticky=W)
-details_file = OldFrame(details, bg=COLOUR_OF_LEVELS[1])
+details_file = OldFrame(details, bg=get_colour(1, True))
 details_file.grid(row=1, column=0, padx=20, pady=20, sticky=W + N, ipady=120)
 details_file_title = Label(details_file, text="加载的脚本",
-                           font=H2_FONT, background=COLOUR_OF_LEVELS[1])
+                           font=H2_FONT, background=get_colour(1, True),
+                           foreground=get_colour(1, False))
 details_file_title.grid(**grid_param(0))
-details_file_loaded = Label(details_file, text="未加载脚本", font=DEFAULT_FONT, background=COLOUR_OF_LEVELS[1])
+details_file_loaded = Label(details_file, text="未加载脚本", font=DEFAULT_FONT,
+                            background=get_colour(1, True), foreground=get_colour(1, False))
 details_file_loaded.grid(**grid_param(1))
 details_file_look = Button(details_file, text="查看脚本指令集(Coming S∞n)", state="disabled")
 details_file_look.grid(**grid_param(2))
@@ -159,15 +177,18 @@ details_file_add = Button(details_file, text="加载一个脚本", command=load_
 details_file_add.grid(**grid_param(3))
 details_file_clear = Button(details_file, text="清除已加载脚本", command=clear_script, state="disabled")
 details_file_clear.grid(**grid_param(4))
-details_state = OldFrame(details, bg=COLOUR_OF_LEVELS[1])
+details_state = OldFrame(details, bg=get_colour(1, True))
 details_state.grid(row=1, column=1, padx=20, pady=20, sticky=W + N, ipady=120)
 details_state_title = Label(details_state, text="运行状态",
-                            font=H2_FONT, background=COLOUR_OF_LEVELS[1])
+                            font=H2_FONT, background=get_colour(1, True),
+                            foreground=get_colour(1, False))
 details_state_title.grid(**grid_param(0))
-details_state_running = Label(details_state, text="未加载脚本", font=DEFAULT_FONT, background=COLOUR_OF_LEVELS[1])
+details_state_running = Label(details_state, text="未加载脚本", font=DEFAULT_FONT,
+                              background=get_colour(1, True), foreground=get_colour(1, False))
 details_state_running.grid(**grid_param(1))
 details_state_run = Button(details_state, text="运行脚本", state="disabled", command=run)
 details_state_run.grid(**grid_param(2))
 
 log.log.info("窗口构建完毕，SpeeKlik开始运行。")
+sv_ttk.set_theme(darkdetect.theme())
 main.mainloop()

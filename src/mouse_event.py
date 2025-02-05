@@ -1,6 +1,5 @@
 """MouseClick和MouseEvents类"""
 import collections
-from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
 from typing import Iterable, override, TypeAlias
